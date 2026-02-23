@@ -1,0 +1,55 @@
+Final Project Report – Advanced Time Series Forecasting (HAR-ARIMA)
+
+This project aimed to build, justify, and compare multiple forecasting models—SARIMA, 
+HAR-ARIMA, and XGBoost—using a multi-scale time-series dataset showing clear daily,
+weekly, and yearly patterns.
+All assigned tasks were successfully completed, and a full comparative evaluation was performed.
+
+1️.Dataset Acquisition & Preparation
+
+Loaded a high-frequency time-series dataset with clear seasonality.
+
+Performed cleaning, handling missing timestamps, and resampling.
+
+Documented preprocessing steps clearly for reproducibility.
+
+2️ HAR-ARIMA Model Implementation
+
+Implemented ARIMA structure with three hierarchical time scales:
+
+Short-term (θ1), Medium-term (θ2), Long-term (θ3).
+
+Justified AR and hierarchical lag selections based on ACF/PACF patterns.
+
+Ensured the model can capture multi-scale temporal dependencies.
+
+3️⃣Model Training & Hyperparameter Tuning
+
+Tuned HAR-ARIMA parameters to reduce error significantly.
+
+Built a baseline SARIMA with seasonal order selection.
+
+Engineered lag/rolling features for XGBoost, improving non-linear pattern detection.
+
+4️.Final Comparative Evaluation
+
+Computed MAE, RMSE, MAPE% for all three models.
+
+Prepared a clear comparison table and interpreted results.
+
+Identified the most accurate model and explained performance differences.
+
+          Final Model Scores (Your Actual Results)
+Model	     MAE	           RMSE        	  MAPE%
+SARIMA	    9785.307688	11581.340783	31.012689%
+HAR-ARIMA   2024.443165	2788.515336	6.408976%
+XGBoost	    s934.198378	1249.355574	3.115682%
+
+Conclusion:
+
+
+1.The project successfully demonstrates that multi-scale modeling greatly improves forecast accuracy.
+
+2.HAR-ARIMA significantly outperformed SARIMA by capturing long-range dependencies.
+
+3.XGBoost delivered the best overall accuracy, thanks to feature-engineering and its ability to model nonlinear patterns.
