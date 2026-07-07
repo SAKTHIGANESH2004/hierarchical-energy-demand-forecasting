@@ -42,9 +42,9 @@ flowchart TD
 
 ---
 
-## Results
+## Results ![Model accuracy comparison](accuracy_comparsion.png)
 
-accuracy_comparsion.png
+
 
 | Model | RMSE | MAE | MAPE (%) |
 |---|---|---|---|
