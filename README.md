@@ -44,7 +44,7 @@ flowchart TD
 
 ## Results
 
-![Model accuracy comparison](accuracy_comparsion.png)
+![accuracy_comparison](https://github.com/user-attachments/assets/a1b2c3d4-....)
 
 | Model | RMSE | MAE | MAPE (%) |
 |---|---|---|---|
