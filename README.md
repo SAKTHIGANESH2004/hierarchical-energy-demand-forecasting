@@ -69,5 +69,3 @@ The hierarchical approach decomposes and models each seasonality at its natural 
 ## Conclusion
 
 This project implements and evaluates a genuine Hierarchical ARIMA model for multi-seasonal electricity load forecasting. By explicitly modeling daily, weekly, and yearly patterns at their natural time scales through sequential residual modeling, HAR-ARIMA significantly outperforms both a standard SARIMA baseline and a feature-engineered XGBoost model on real-world PJM load data.
-
----
