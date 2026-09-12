@@ -1,9 +1,10 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.metrics import mean_squared_error, mean_absolute_error, mean_absolute_percentage_error
+from sklearn.metrics 
+import mean_squared_error, mean_absolute_error, mean_absolute_percentage_error
 
-df = pd.read_csv('PJM_Load_hourly.csv', parse_dates=['Datetime'])
+df = pd.read_csv('PJM_load_hourly.csv', parse_dates=['Datetime'])
 df = df.set_index('Datetime').sort_index()
 df = df[~df.index.duplicated(keep='first')].asfreq('H')
 df['consumption'] = df['PJM_Load_MW'].interpolate()
@@ -87,6 +88,7 @@ results = pd.DataFrame({
 print("\nDELIVERABLE 3 – COMPARATIVE ANALYSIS")
 print(results)
 
+# ==== Line Chart: Actual vs Forecast over time ====
 plt.figure(figsize=(16,7))
 plt.plot(test.index, test, label='Actual', linewidth=2.5, color='black')
 plt.plot(test.index, har_forecast, label='HAR-ARIMA (Winner)', linewidth=2.2, color='red')
@@ -94,6 +96,32 @@ plt.plot(test.index, sarima_forecast, label='SARIMA', alpha=0.7)
 plt.plot(test.index, xgb_forecast, label='XGBoost', alpha=0.7)
 plt.title('PJM Load Forecast – HAR-ARIMA Beats SARIMA & XGBoost', fontsize=16)
 plt.legend(); plt.grid(alpha=0.3); plt.tight_layout()
+plt.savefig('actual_vs_forecast_lineplot.png', dpi=150)
+plt.show()
+
+# ==== Bar Chart: Model Accuracy Comparison (RMSE, MAE, MAPE side by side) ====
+# Reorder to match HAR-ARIMA, XGBoost, SARIMA display order used in the summary chart
+bar_order = ['HAR-ARIMA', 'XGBoost', 'SARIMA']
+results_ordered = results.set_index('Model').loc[bar_order].reset_index()
+
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+fig.suptitle('Model accuracy comparison — PJM hourly load forecasting', fontsize=16)
+
+colors = ['#1b9e77', '#e6ab02', '#e41a1c']  # green, orange, red
+metrics = ['RMSE', 'MAE', 'MAPE (%)']
+
+for ax, metric in zip(axes, metrics):
+    bars = ax.bar(results_ordered['Model'], results_ordered[metric], color=colors)
+    ax.set_title(metric, fontsize=14)
+    ax.grid(axis='y', alpha=0.3)
+    for bar in bars:
+        height = bar.get_height()
+        label = f'{height:.2f}' if metric == 'MAPE (%)' else f'{height:.1f}'
+        ax.text(bar.get_x() + bar.get_width()/2, height, label,
+                 ha='center', va='bottom', fontsize=11)
+
+plt.tight_layout(rect=[0, 0, 1, 0.93])
+plt.savefig('model_comparison_barchart.png', dpi=150)
 plt.show()
 
 print("\nDELIVERABLE 4 – FINAL MODEL CONFIGURATION")
@@ -102,6 +130,3 @@ print("""HierarchicalARIMA(
     theta2 = (2,0,2)   # Weekly level (weekend dips)
     theta3 = (1,0,1)   # Yearly level (seasonal trend)
 )""")
-
-
-
